@@ -65,17 +65,19 @@ def checkAdmin(Id,password,cursor):
 
 
 def AddProject(category,summary,university,link,language,hw):
+
  # the header of the scv file(Dalili's project ideas)
- fieldnames = ['Category', 'Summary','Languages','University','Link','HardWare']
- project={'Category': category, 'Summary': summary, 'Languages': language, 'University': university, 'Link': link, 'HardWare': hw}
+    try:
+     fieldnames = ['Category', 'Summary','Languages','University','Link','HardWare']
+     project={'Category': category, 'Summary': summary, 'Languages': language, 'University': university, 'Link': link, 'HardWare': hw}
  
       # append the new project to the Dalili_DB file
- with open('Dalili_DB.csv','a+',encoding='UTF8', newline='') as inFile:
+      
+     with open('Dalili_DB.csv','a+',encoding='UTF8', newline='') as inFile:
             writer = csv.DictWriter(inFile, fieldnames=fieldnames)
             writer.writerow(project)
             inFile.close() 
+    except:
+        print("no file named Dalili")
 
-                  
-   
- 
 
