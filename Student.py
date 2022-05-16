@@ -31,8 +31,7 @@ lemmatizer = WordNetLemmatizer()
 
 model = word2vec.KeyedVectors.load_word2vec_format('/Users/macbook/Downloads/SO_vectors_200.bin', binary=True) # model 1(software model)
 G_model=word2vec.KeyedVectors.load_word2vec_format('/Users/macbook/Downloads/wiki-news-300d-1M.vec') # model 2 (general model )
-Languages_onehot_encoded = OneHotEncoder().fit_transform(np.array(ideas_temp["Languages"]).reshape(-1,1)) # Encode as a one-hot numeric array
-Category_onehot_encoded = OneHotEncoder().fit_transform(np.array(ideas_temp["Category"]).reshape(-1,1))
+
 num_similar_items=6 # number of idea that  will be shown to the user
 w1=0.5 # weight corresponding to model 1
 w2=0.4 # weight corresponding to model 2
@@ -47,10 +46,9 @@ def pre_processing():
     NLP()
     
     return render_template('index.html')   
-@app.route("/index")  
 
 
-   
+@app.route("/index")   
 def home():
     # Check if user is loggedin
     if 'loggedin' in session:
@@ -240,6 +238,7 @@ def profile():
 
         # Show the profile page with account info
         return render_template('profile.html', account=account)
+
     elif 'loggedinA' in session:
             # We need all the account info for the Admin so we can display it on the profile page
         cursor=mysql.connection.cursor(MySQLdb.cursors.DictCursor)
@@ -331,24 +330,6 @@ def checkSignUP(Fname,Lname,password,email,cursor):
             
             msg = 'You have successfully registered!'
             return  msg
-
-def checkAdmin(Id,password,cursor):
-        # Check if account exists using MySQL
-        
-        cursor.execute('SELECT * FROM Developer WHERE Id = %s AND password = %s', (Id, password,))
-        # Fetch  record and return result
-        account = cursor.fetchone()
-        if account:
-            
-            return account
-
-        else:
-            return None
-
-
-
-                  
-
 
 
 
